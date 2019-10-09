@@ -24,7 +24,36 @@ import {
   ReloadInstructions,
 } from "react-native/Libraries/NewAppScreen";
 
+import FormBody from "./FormBody";
+// import FormResult from "./FormResult";
+
 const App: () => React$Node = () => {
+  state = {
+    cardNum: undefined,
+    cardType: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    isValid: true,
+  };
+
+  handleSubmit = (
+    cardNum?: string,
+    firstName?: string,
+    lastName?: string,
+    isValid: boolean
+  ) => {
+    this.setState({
+      cardNum: cardNum,
+      firstName: firstName,
+      lastName: lastName,
+      isValid: isValid,
+    });
+  };
+
+  handleCardTypeChange = (cardType: string | void) => {
+    this.setState({ cardType });
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -33,6 +62,17 @@ const App: () => React$Node = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
+          <FormBody
+          onSubmit={this.handleSubmit}
+          onCardTypeChange={this.handleCardTypeChange}
+        />
+          {/* <FormResult
+            cardNum={this.state.cardNum}
+            cardType={this.state.cardType}
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            isValid={this.state.isValid}
+          /> */}
           <Header />
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
