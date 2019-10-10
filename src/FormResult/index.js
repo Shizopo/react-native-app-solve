@@ -77,14 +77,29 @@ class FormResult extends React.Component<Props, State> {
       );
     }
     return (
-      <View>
-        <Text>Card number: {cardNum.slice(-4)}</Text>
-        <Text>Card type: {cardType}</Text>
-        <Text>First Name: {firstName}</Text>
-        <Text>Last Name: {lastName}</Text>
+      <View style={styles.formSection}>
+        <Text style={styles.cardDetails}>Card number: {cardNum.slice(-4)}</Text>
+        <Text style={styles.cardDetails}>Card type: {cardType}</Text>
+        <Text style={styles.cardDetails}>First Name: {firstName}</Text>
+        <Text style={styles.cardDetails}>Last Name: {lastName}</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  formSection: {
+    flex: 1,
+    flexGrow: 1,
+    justifyContent: "center",
+    alignSelf: "center",
+    width: "80%",
+  },
+  cardDetails: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    fontSize: 20,
+  },
+});
 
 export default FormResult;

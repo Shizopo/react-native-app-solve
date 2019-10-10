@@ -147,11 +147,17 @@ class FormBody extends React.Component<Props, State> {
 
     return (
       <View>
-        <View style={{ padding: 40 }}>
-          <Text>Checkout form</Text>
+        <View style={styles.formSection}>
+          <Text style={styles.formHeading}>Checkout form</Text>
 
-          <Text>Card number</Text>
+          <Text style={styles.label}>Card number</Text>
           <TextInput
+            style={[
+              styles.input,
+              {
+                borderBottomColor: valid.cardNum === true ? "#000" : "#ff0000",
+              },
+            ]}
             type="text"
             name="cardNum"
             id="cardNum"
@@ -159,25 +165,37 @@ class FormBody extends React.Component<Props, State> {
             maxLength={16}
             placeholder="1111222233334444"
             value={this.state.value}
-            // className={valid.cardNum === true ? "" : "invalidInput"}
             onChangeText={val => this.handleInput("cardNum", val)}
           />
 
           <View className="creditCardSecurity">
-            <Text>Card expiry date</Text>
+            <Text style={styles.label}>Card expiry date</Text>
             <TextInput
+              style={[
+                styles.input,
+                {
+                  borderBottomColor:
+                    valid.expirationDate === true ? "#000" : "#ff0000",
+                },
+              ]}
               type="text"
               name="expirationDate"
               id="expirationDate"
               maxLength={5}
               placeholder="MM/YY"
               value={this.state.value}
-              // className={valid.expirationDate === true ? "" : "invalidInput"}
               onChangeText={val => this.handleInput("expirationDate", val)}
             />
 
-            <Text>CVV2/CVC2</Text>
+            <Text style={styles.label}>CVV2/CVC2</Text>
             <TextInput
+              style={[
+                styles.input,
+                {
+                  borderBottomColor:
+                    valid.cardCvv === true ? "#000" : "#ff0000",
+                },
+              ]}
               type="text"
               inputMode="numeric"
               name="cardCvv"
@@ -186,52 +204,72 @@ class FormBody extends React.Component<Props, State> {
               maxLength={4}
               placeholder="1234"
               value={this.state.value}
-              // className={valid.cardCvv === true ? "" : "invalidInput"}
               onChangeText={val => this.handleInput("cardCvv", val)}
             />
           </View>
 
-          <Text>First name</Text>
+          <Text style={styles.label}>First name</Text>
           <TextInput
+            style={[
+              styles.input,
+              {
+                borderBottomColor:
+                  valid.firstName === true ? "#000" : "#ff0000",
+              },
+            ]}
             type="text"
             name="firstName"
             id="firstName"
             placeholder="Jane"
             value={this.state.value}
-            // className={valid.firstName === true ? "" : "invalidInput"}
             onChangeText={val => this.handleInput("firstName", val)}
           />
 
-          <Text>Last name</Text>
+          <Text style={styles.label}>Last name</Text>
           <TextInput
+            style={[
+              styles.input,
+              {
+                borderBottomColor: valid.lastName === true ? "#000" : "#ff0000",
+              },
+            ]}
             type="text"
             name="lastName"
             id="lastName"
             placeholder="Doe"
             value={this.state.value}
-            // className={valid.lastName === true ? "" : "invalidInput"}
             onChangeText={val => this.handleInput("lastName", val)}
           />
 
-          <Text>Security question</Text>
+          <Text style={styles.label}>Security question</Text>
           <TextInput
+            style={[
+              styles.input,
+              {
+                borderBottomColor: valid.question === true ? "#000" : "#ff0000",
+              },
+            ]}
             type="text"
             name="question"
             id="question"
             placeholder="Your security question"
             value={this.state.value}
-            // className={valid.question === true ? "" : "invalidInput"}
             onChangeText={val => this.handleInput("question", val)}
           />
 
-          <Text>Security answer</Text>
+          <Text style={styles.label}>Security answer</Text>
           <TextInput
+            style={[
+              styles.input,
+              {
+                borderBottomColor: valid.answer === true ? "#000" : "#ff0000",
+              },
+            ]}
             type="text"
             name="answer"
             id="answer"
             placeholder="Your security answer"
             value={this.state.value}
-            // className={valid.answer === true ? "" : "invalidInput"}
             onChangeText={val => this.handleInput("answer", val)}
           />
 
@@ -242,7 +280,7 @@ class FormBody extends React.Component<Props, State> {
           <Button
             type="submit"
             title="Submit"
-            // className="submitButton"
+            style={styles.submitButton}
             onPress={this.handleSubmit}
           />
         </View>
@@ -250,5 +288,40 @@ class FormBody extends React.Component<Props, State> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  formSection: {
+    flex: 1,
+    flexGrow: 1,
+    justifyContent: "center",
+    alignSelf: "center",
+    width: "80%",
+  },
+  formHeading: {
+    alignSelf: "center",
+    paddingTop: 20,
+    paddingBottom: 20,
+    fontSize: 26,
+    fontWeight: "600",
+  },
+  label: {
+    paddingTop: 20,
+    fontSize: 16,
+  },
+  input: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+  },
+  invalidInput: {
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+  },
+  submitButton: {
+    margin: 40,
+  },
+});
 
 export default FormBody;
