@@ -69,10 +69,10 @@ class FormResult extends React.Component<Props, State> {
       return null;
     }
 
-    if (!isValid || !cardNum) {
+    if (!isValid || !cardNum || !cardType || !firstName || !lastName) {
       return (
-        <View>
-          <Text>Error</Text>
+        <View style={styles.formSection}>
+          <Text style={styles.cardDetails}>Error</Text>
         </View>
       );
     }
