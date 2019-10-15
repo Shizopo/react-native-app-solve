@@ -20,7 +20,6 @@ type State = {
 
 class ProductForm extends React.Component<Props, State> {
   state = {
-    value: undefined,
     productTitle: undefined,
     productWeight: undefined,
     productSize: undefined,
@@ -30,16 +29,42 @@ class ProductForm extends React.Component<Props, State> {
   };
 
   handleInput = (name, value) => {
-    // console.log(name, value);
     this.setState({ [name]: value });
   };
 
   onCreate = () => {
-    this.setState({ creatingMode: false }, () => console.log("created"));
+    this.setState({ creatingMode: false }, () => console.log("form created"));
   };
 
   onEdit = () => {
-    this.setState({ editingMode: true }, () => console.log("editing mode"));
+    this.setState(
+      prevState => ({
+        editingMode: !prevState.editingMode,
+      }),
+      () => console.log("editing mode")
+    );
+  };
+
+  provideResult = () => {
+    if (
+      this.state.productTitle ||
+      this.state.productWeight ||
+      this.state.productSize ||
+      this.state.productOrigin
+    ) {
+      return (
+        <View style={styles.formResult}>
+          <Text style={styles.resultString}>
+            {JSON.stringify(this.state.productTitle)}
+          </Text>
+          <Text>{JSON.stringify(this.state.productWeight)}</Text>
+          <Text>{JSON.stringify(this.state.productSize)}</Text>
+          <Text>{JSON.stringify(this.state.productOrigin)}</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
   };
 
   render() {
@@ -109,6 +134,9 @@ class ProductForm extends React.Component<Props, State> {
             placeholder="Some title"
             selectedValue={this.state.productOrigin}
             onValueChange={val => this.handleInput("productOrigin", val)}
+            enabled={
+              this.state.creatingMode || this.state.editingMode ? true : false
+            }
           >
             <Picker.Item label="Ukraine" value="Ukraine" />
             <Picker.Item label="India" value="India" />
@@ -116,13 +144,13 @@ class ProductForm extends React.Component<Props, State> {
             <Picker.Item label="China" value="China" />
           </Picker>
         </View>
+        {!this.state.creatingMode ? this.provideResult() : null}
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {},
   formSection: {
     alignSelf: "center",
     width: "80%",
@@ -150,9 +178,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderStyle: "solid",
   },
-  invalidInput: {
-    borderBottomWidth: 1,
-    borderStyle: "solid",
+  formResult: {
+    width: "60%",
+    alignSelf: "center",
+    paddingTop: 20,
+  },
+  resultString: {
+    fontSize: 18,
   },
 });
 
