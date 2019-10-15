@@ -19,6 +19,7 @@ import {
 import FormBody from "./FormBody";
 import FormResult from "./FormResult";
 import EndlessList from "./EndlessList";
+import ProductForm from "./ProductForm";
 
 type Props = {};
 
@@ -61,7 +62,8 @@ class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <EndlessList />
+      // <EndlessList />
+      <ProductForm />
       // <ScrollView>
       //   <View style={styles.container}>
       //     <FormBody
