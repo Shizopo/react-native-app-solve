@@ -14,7 +14,7 @@ class EndlessList extends React.Component {
         let data = [];
         resp.results.forEach((el, index) => {
           data.push({
-            index: ++index,
+            key: ++index,
             first: el.name.first,
             last: el.name.last,
             photo: el.picture.thumbnail,
@@ -26,23 +26,26 @@ class EndlessList extends React.Component {
   };
 
   componentDidMount() {
-    this.pullData(200);
+    this.pullData(1000);
   }
 
   showComponent = user => {
     return (
-      <View style={styles.userCard}>
-        <Text style={[styles.mainText, styles.userNumber]}>{user.index}</Text>
-        <View style={styles.userName}>
-          <Text style={[styles.mainText, styles.userFirstName]}>
-            {user.first}
-          </Text>
-          <Text style={[styles.mainText, styles.userLastName]}>
-            {user.last}
-          </Text>
+      <>
+        <View style={styles.userCard}>
+          <Text style={[styles.mainText, styles.userNumber]}>{user.key}</Text>
+          <View style={styles.userName}>
+            <Text style={[styles.mainText, styles.userFirstName]}>
+              {user.first}
+            </Text>
+            <Text style={[styles.mainText, styles.userLastName]}>
+              {user.last}
+            </Text>
+          </View>
+          <Image style={styles.userPhoto} source={{ uri: user.photo }} />
         </View>
-        <Image style={styles.userPhoto} source={{ uri: user.photo }} />
-      </View>
+        <View style={styles.separator} />
+      </>
     );
   };
 
@@ -69,25 +72,40 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "stretch",
-    height: 100,
+    height: 180,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   userName: {
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   mainText: {
-    fontSize: 20,
+    fontSize: 22,
   },
-  userNumber: {},
+  userNumber: {
+    fontSize: 24,
+    alignSelf: "center",
+  },
   userPhoto: {
     width: 80,
     height: 80,
     borderRadius: 50,
+    marginTop: 15,
+    marginBottom: 15,
+    alignSelf: "center",
   },
   userFirstName: {
     alignSelf: "flex-start",
   },
   userLastName: {
     alignSelf: "flex-end",
+  },
+  separator: {
+    height: 1,
+    width: "85%",
+    backgroundColor: "#000",
+    alignSelf: "center",
   },
 });
 
