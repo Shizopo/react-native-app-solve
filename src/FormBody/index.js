@@ -30,16 +30,6 @@ type StateValidate = {
   answer: boolean,
 };
 
-type StateErrors = {
-  cardNum: string,
-  expirationDate: string,
-  cardCvv: string,
-  firstName: string,
-  lastName: string,
-  question: string,
-  answer: string,
-};
-
 type State = {
   cardNum?: string,
   expirationDate?: string,
@@ -49,7 +39,6 @@ type State = {
   question?: string,
   answer?: string,
   valid: StateValidate,
-  errors: StateErrors,
   isValid: boolean,
   value?: string,
 };
@@ -73,21 +62,11 @@ class FormBody extends React.Component<Props, State> {
       question: true,
       answer: true,
     },
-    errors: {
-      cardNum: "",
-      expirationDate: "",
-      cardCvv: "",
-      firstName: "",
-      lastName: "",
-      question: "",
-      answer: "",
-    },
     isValid: true,
   };
 
   pushData = (data: Array) => {
     callAPI(data)
-      // .then(resp => resp.json())
       .then(resp => {
         console.log(resp);
         this.setState({ valid: resp });
@@ -142,46 +121,13 @@ class FormBody extends React.Component<Props, State> {
   // };
 
   handleInput = (name, value) => {
-    this.setState(
-      { [name]: value }
-      //    () => {
-      //   this.validate(name, value);
-      // }
-    );
+    this.setState({ [name]: value });
   };
 
   // eslint-disable-next-line no-undef
   handleSubmit = () => {
     let valid = { ...this.state.valid };
     let isValid = this.state.isValid;
-    let errors = { ...this.state.errors };
-
-    // for (let key in valid) {
-    //   if (valid[key] !== true) {
-    //     this.setState(
-    //       prevState => ({
-    //         errors: {
-    //           ...prevState.errors,
-    //           [key]: "Error",
-    //         },
-    //       }),
-    //       () => console.log(this.state.errors)
-    //     );
-
-    //     isValid = false;
-    //     this.setState({ isValid });
-    //   } else {
-    //     this.setState(
-    //       prevState => ({
-    //         errors: {
-    //           ...prevState.errors,
-    //           [key]: "",
-    //         },
-    //       }),
-    //       () => console.log(this.state.errors)
-    //     );
-    //   }
-    // }
 
     this.setState({ isValid }, () => {
       this.props.onSubmit(
@@ -192,13 +138,6 @@ class FormBody extends React.Component<Props, State> {
       );
     });
 
-    // this.pushData([
-    //   this.state.cardNum,
-    //   this.state.firstName,
-    //   this.state.lastName,
-    //   this.state.isValid,
-    // ]);
-
     this.pushData(this.state);
 
     return true;
@@ -206,7 +145,6 @@ class FormBody extends React.Component<Props, State> {
 
   render() {
     let { valid } = this.state;
-    let { errors } = this.state;
     console.log(valid);
 
     return (

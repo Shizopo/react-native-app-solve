@@ -1,16 +1,8 @@
-// import React from "react";
-// import {
-//   Platform,
-//   StyleSheet,
-//   FlatList,
-//   View,
-//   Text,
-//   Image,
-// } from "react-native";
-
 const formServer = data => {
   return new Promise(resolve => {
-    setTimeout(() => resolve(validate(data)), 2000);
+    // setTimeout(() =>
+    resolve(validate(data));
+    // , 2000);
   });
 };
 
@@ -21,18 +13,14 @@ const formServer = data => {
 // };
 
 const serverValidation = data => formServer(data);
-const callAPI = data => serverValidation(data);
-
-// callAPI(data);
-
-// serverValidation(formServer);
+// const callAPI = data => serverValidation(data);
 
 const validate = data => {
   let formData = { ...data };
   let valid = { ...data.valid };
 
-  console.log(valid);
-  console.log(formData);
+  // console.log(valid);
+  // console.log(formData);
   let dataFields = Object.keys(formData);
   dataFields.forEach(el => {
     switch (el) {
@@ -60,24 +48,24 @@ const validate = data => {
       }
       case "firstName": {
         valid.firstName =
-          data.firstName && data.firstName.length < 2 ? false : true;
+          !data.firstName || data.firstName.length < 2 ? false : true;
         console.log("I validated first name and get " + valid.firstName);
         break;
       }
       case "lastName": {
         valid.lastName =
-          data.lastName && data.lastName.length < 3 ? false : true;
+          !data.lastName || data.lastName.length < 3 ? false : true;
         console.log("I validated last name and get " + valid.lastName);
         break;
       }
       case "question": {
         valid.question =
-          data.question && data.question.length < 10 ? false : true;
+          !data.question || data.question.length < 10 ? false : true;
         console.log("I validated security question and get " + valid.question);
         break;
       }
       case "answer": {
-        valid.answer = data.answer && data.answer.length < 3 ? false : true;
+        valid.answer = !data.answer || data.answer.length < 3 ? false : true;
         console.log("I validated security answer and get " + valid.answer);
         break;
       }
@@ -87,10 +75,9 @@ const validate = data => {
       }
     }
   });
-  console.log(valid);
-  console.log(formData);
+  // console.log(valid);
+  // console.log(formData);
   return valid;
-  //   this.setState({ valid, [name]: value }, () => console.log(this.state));
 };
 
-export default callAPI;
+export default serverValidation;
