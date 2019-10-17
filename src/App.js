@@ -63,26 +63,24 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       // <EndlessList />
-      <ProductForm />
-      // <ScrollView>
-      //   <View style={styles.container}>
-      //     <FormBody
-      //       onSubmit={this.handleSubmit}
-      //       onCardTypeChange={this.handleCardTypeChange}
-      //     />
-      //     <FormResult
-      //       cardNum={this.state.cardNum}
-      //       cardType={this.state.cardType}
-      //       firstName={this.state.firstName}
-      //       lastName={this.state.lastName}
-      //       isValid={this.state.isValid}
-      //     />
-      //   </View>
+      // <ProductForm />
+      <ScrollView>
+        <View style={styles.container}>
+          <FormBody
+            onSubmit={this.handleSubmit}
+            onCardTypeChange={this.handleCardTypeChange}
+          />
+          <FormResult
+            cardNum={this.state.cardNum}
+            cardType={this.state.cardType}
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            isValid={this.state.isValid}
+          />
+        </View>
 
-      //   <View style={styles.container}>
-
-      //   </View>
-      // </ScrollView>
+        <View style={styles.container}></View>
+      </ScrollView>
     );
   }
 }

@@ -7,8 +7,8 @@ import {
   TextInput,
   Button,
 } from "react-native";
-// import ReactNativeComponentTree from "react-native/Libraries/Renderer/shims/ReactNativeComponentTree";
 import CardDetails from "../CardDetails";
+import callAPI from "../FormServer";
 
 type Props = {
   onSubmit: (
@@ -56,7 +56,7 @@ type State = {
 
 class FormBody extends React.Component<Props, State> {
   state = {
-    value: undefined,
+    // value: undefined,
     cardNum: undefined,
     expirationDate: undefined,
     cardCvv: undefined,
@@ -85,57 +85,69 @@ class FormBody extends React.Component<Props, State> {
     isValid: true,
   };
 
-  validate = (name, value) => {
-    let valid = { ...this.state.valid };
-
-    console.log(name, value, valid);
-
-    switch (name) {
-      case "cardNum": {
-        let cardNumReg = /^[0-9]{16}/;
-        valid.cardNum = cardNumReg.test(value) ? true : false;
-        break;
-      }
-      case "expirationDate": {
-        let expirationDateReg = /^(0[1-9]|1[0-2])\/\d{2}$/;
-        valid.expirationDate = expirationDateReg.test(value) ? true : false;
-        break;
-      }
-      case "cardCvv": {
-        let cardCvvReg = /^[0-9]{3,4}$/;
-        valid.cardCvv = cardCvvReg.test(value) ? true : false;
-        break;
-      }
-      case "firstName": {
-        valid.firstName = value.length < 2 ? false : true;
-        break;
-      }
-      case "lastName": {
-        valid.lastName = value.length < 3 ? false : true;
-        break;
-      }
-      case "question": {
-        valid.question = value.length < 10 ? false : true;
-        break;
-      }
-      case "answer": {
-        valid.answer = value.length < 3 ? false : true;
-        break;
-      }
-      default: {
-        console.log("nothing to validate");
-        break;
-      }
-    }
-
-    this.setState({ valid, [name]: value }, () => console.log(this.state));
+  pushData = (data: Array) => {
+    callAPI(data)
+      // .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp);
+        this.setState({ valid: resp });
+      })
+      .catch(err => console.log(err));
   };
 
+  // validate = (name, value) => {
+  //   let valid = { ...this.state.valid };
+
+  //   console.log(name, value, valid);
+
+  //   switch (name) {
+  //     case "cardNum": {
+  //       let cardNumReg = /^[0-9]{16}/;
+  //       valid.cardNum = cardNumReg.test(value) ? true : false;
+  //       break;
+  //     }
+  //     case "expirationDate": {
+  //       let expirationDateReg = /^(0[1-9]|1[0-2])\/\d{2}$/;
+  //       valid.expirationDate = expirationDateReg.test(value) ? true : false;
+  //       break;
+  //     }
+  //     case "cardCvv": {
+  //       let cardCvvReg = /^[0-9]{3,4}$/;
+  //       valid.cardCvv = cardCvvReg.test(value) ? true : false;
+  //       break;
+  //     }
+  //     case "firstName": {
+  //       valid.firstName = value.length < 2 ? false : true;
+  //       break;
+  //     }
+  //     case "lastName": {
+  //       valid.lastName = value.length < 3 ? false : true;
+  //       break;
+  //     }
+  //     case "question": {
+  //       valid.question = value.length < 10 ? false : true;
+  //       break;
+  //     }
+  //     case "answer": {
+  //       valid.answer = value.length < 3 ? false : true;
+  //       break;
+  //     }
+  //     default: {
+  //       console.log("nothing to validate");
+  //       break;
+  //     }
+  //   }
+
+  //   this.setState({ valid, [name]: value }, () => console.log(this.state));
+  // };
+
   handleInput = (name, value) => {
-    // console.log(name, value);
-    this.setState({ [name]: value }, () => {
-      this.validate(name, value);
-    });
+    this.setState(
+      { [name]: value }
+      //    () => {
+      //   this.validate(name, value);
+      // }
+    );
   };
 
   // eslint-disable-next-line no-undef
@@ -144,32 +156,32 @@ class FormBody extends React.Component<Props, State> {
     let isValid = this.state.isValid;
     let errors = { ...this.state.errors };
 
-    for (let key in valid) {
-      if (valid[key] !== true) {
-        this.setState(
-          prevState => ({
-            errors: {
-              ...prevState.errors,
-              [key]: "Error",
-            },
-          }),
-          () => console.log(this.state.errors)
-        );
+    // for (let key in valid) {
+    //   if (valid[key] !== true) {
+    //     this.setState(
+    //       prevState => ({
+    //         errors: {
+    //           ...prevState.errors,
+    //           [key]: "Error",
+    //         },
+    //       }),
+    //       () => console.log(this.state.errors)
+    //     );
 
-        isValid = false;
-        this.setState({ isValid });
-      } else {
-        this.setState(
-          prevState => ({
-            errors: {
-              ...prevState.errors,
-              [key]: "",
-            },
-          }),
-          () => console.log(this.state.errors)
-        );
-      }
-    }
+    //     isValid = false;
+    //     this.setState({ isValid });
+    //   } else {
+    //     this.setState(
+    //       prevState => ({
+    //         errors: {
+    //           ...prevState.errors,
+    //           [key]: "",
+    //         },
+    //       }),
+    //       () => console.log(this.state.errors)
+    //     );
+    //   }
+    // }
 
     this.setState({ isValid }, () => {
       this.props.onSubmit(
@@ -180,25 +192,22 @@ class FormBody extends React.Component<Props, State> {
       );
     });
 
+    // this.pushData([
+    //   this.state.cardNum,
+    //   this.state.firstName,
+    //   this.state.lastName,
+    //   this.state.isValid,
+    // ]);
+
+    this.pushData(this.state);
+
     return true;
   };
 
-  // removeUnderline = target => {
-  //   let errors = { ...this.state.errors };
-  //   this.setState(
-  //     prevState => ({
-  //       errors: {
-  //         ...prevState.errors,
-  //         [target]: "",
-  //       },
-  //     }),
-  //     () => console.log(this.state.errors)
-  //   );
-  // };
-
   render() {
-    // let { valid } = this.state;
+    let { valid } = this.state;
     let { errors } = this.state;
+    console.log(valid);
 
     return (
       <View>
@@ -210,8 +219,7 @@ class FormBody extends React.Component<Props, State> {
             style={[
               styles.input,
               {
-                borderBottomColor:
-                  errors.cardNum.length > 0 ? "#ff0000" : "#000",
+                borderBottomColor: valid.cardNum === false ? "#ff0000" : "#000",
               },
             ]}
             type="text"
@@ -221,7 +229,6 @@ class FormBody extends React.Component<Props, State> {
             maxLength={16}
             placeholder="1111222233334444"
             value={this.state.value}
-            // onFocus={this.setState()}
             onChangeText={val => this.handleInput("cardNum", val)}
           />
 
@@ -232,7 +239,7 @@ class FormBody extends React.Component<Props, State> {
                 styles.input,
                 {
                   borderBottomColor:
-                    errors.expirationDate.length > 0 ? "#ff0000" : "#000",
+                    valid.expirationDate === false ? "#ff0000" : "#000",
                 },
               ]}
               type="text"
@@ -250,7 +257,7 @@ class FormBody extends React.Component<Props, State> {
                 styles.input,
                 {
                   borderBottomColor:
-                    errors.cardCvv.length > 0 ? "#ff0000" : "#000",
+                    valid.cardCvv === false ? "#ff0000" : "#000",
                 },
               ]}
               type="text"
@@ -271,7 +278,7 @@ class FormBody extends React.Component<Props, State> {
               styles.input,
               {
                 borderBottomColor:
-                  errors.firstName.length > 0 ? "#ff0000" : "#000",
+                  valid.firstName === false ? "#ff0000" : "#000",
               },
             ]}
             type="text"
@@ -288,7 +295,7 @@ class FormBody extends React.Component<Props, State> {
               styles.input,
               {
                 borderBottomColor:
-                  errors.lastName.length > 0 ? "#ff0000" : "#000",
+                  valid.lastName === false ? "#ff0000" : "#000",
               },
             ]}
             type="text"
@@ -305,7 +312,7 @@ class FormBody extends React.Component<Props, State> {
               styles.input,
               {
                 borderBottomColor:
-                  errors.question.length > 0 ? "#ff0000" : "#000",
+                  valid.question === false ? "#ff0000" : "#000",
               },
             ]}
             type="text"
@@ -321,8 +328,7 @@ class FormBody extends React.Component<Props, State> {
             style={[
               styles.input,
               {
-                borderBottomColor:
-                  errors.answer.length > 0 ? "#ff0000" : "#000",
+                borderBottomColor: valid.answer === false ? "#ff0000" : "#000",
               },
             ]}
             type="text"
@@ -372,7 +378,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
     fontSize: 16,
-    // borderBottomColor: "#000",
     borderBottomWidth: 1,
     borderStyle: "solid",
   },
