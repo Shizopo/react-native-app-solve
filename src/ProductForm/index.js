@@ -9,21 +9,25 @@ import {
   Picker,
 } from "react-native";
 
-type Props = {};
+type Props = {
+  styles?: StyleSheet.Styles,
+};
+
 type State = {
-  productTitle?: string,
-  productWeight?: string,
-  productSize?: string,
-  productOrigin?: string,
+  productTitle: string,
+  productWeight: string,
+  productSize: string,
+  productOrigin: string,
   creatingMode: boolean,
+  editingMode: boolean,
 };
 
 class ProductForm extends React.Component<Props, State> {
   state = {
-    productTitle: undefined,
-    productWeight: undefined,
-    productSize: undefined,
-    productOrigin: undefined,
+    productTitle: "",
+    productWeight: "",
+    productSize: "",
+    productOrigin: "",
     creatingMode: true,
     editingMode: false,
   };
@@ -45,7 +49,7 @@ class ProductForm extends React.Component<Props, State> {
     );
   };
 
-  provideResult = () => {
+  renderResult = () => {
     if (
       this.state.productTitle ||
       this.state.productWeight ||
@@ -144,7 +148,7 @@ class ProductForm extends React.Component<Props, State> {
             <Picker.Item label="China" value="China" />
           </Picker>
         </View>
-        {!this.state.creatingMode ? this.provideResult() : null}
+        {!this.state.creatingMode ? this.renderResult() : null}
       </>
     );
   }

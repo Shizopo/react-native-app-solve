@@ -11,7 +11,7 @@ import {
 type Props = {};
 
 type State = {
-  users: Array,
+  users: Array<{ key: number, first: string, last: string, photo: string }>,
 };
 
 class EndlessList extends React.Component<Props, State> {
@@ -19,7 +19,7 @@ class EndlessList extends React.Component<Props, State> {
     users: [],
   };
 
-  pullData = (num: number) => {
+  fetchData = (num: number) => {
     let { users } = this.state;
     fetch(`https://randomuser.me/api/?results=${num}&inc=name,picture`)
       .then(resp => resp.json())
@@ -27,22 +27,23 @@ class EndlessList extends React.Component<Props, State> {
         let data: Array = [];
         resp.results.forEach((el: Object, index: number) => {
           data.push({
-            key: ++index,
+            key: index,
             first: el.name.first,
             last: el.name.last,
-            photo: el.picture.thumbnail,
+            photo: el.picture.medium,
           });
         });
+        console.log(users);
         this.setState({ users: data.slice() }, () => console.log(this.state));
       })
       .catch(err => console.log(err));
   };
 
   componentDidMount() {
-    this.pullData(1000);
+    this.fetchData(1000);
   }
 
-  showComponent = (user: Object) => {
+  renderEndlessList = (user: Object) => {
     return (
       <>
         <View style={styles.userCard}>
@@ -67,7 +68,7 @@ class EndlessList extends React.Component<Props, State> {
       <FlatList
         style={styles.container}
         data={this.state.users}
-        renderItem={({ item }) => this.showComponent(item)}
+        renderItem={({ item }) => this.renderEndlessList(item)}
         initialNumToRender={10}
         windowSize={11}
         getItemLayout={(data, index) => ({
