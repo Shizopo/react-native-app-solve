@@ -8,7 +8,11 @@ import {
   Button,
 } from "react-native";
 import CardDetails from "../CardDetails";
-import callAPI from "../FormServer";
+import callAPI from "../../FormServer";
+import { connect } from "react-redux";
+import { onSubmit } from "../../actions/onSubmit";
+import { formReducer } from "../../reducers/formReducer";
+// import serverValidation from "../../FormServer";
 
 type Props = {
   onSubmit: (
@@ -138,6 +142,7 @@ class FormBody extends React.Component<Props, State> {
       );
     });
 
+    // this.props.onSubmit(this.state);
     this.pushData(this.state);
 
     return true;
@@ -328,4 +333,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormBody;
+const FormBodyContainer = connect(
+  state => ({
+    form: state.formReducer,
+  }),
+  {
+    onSubmit,
+  }
+)(FormBody);
+
+export { FormBodyContainer as FormBody };

@@ -7,6 +7,8 @@ import {
   Text,
   Image,
 } from "react-native";
+import { connect } from "react-redux";
+import { fetchUsers } from "../../actions/fetchUsers";
 
 type Props = {};
 
@@ -19,28 +21,28 @@ class EndlessList extends React.Component<Props, State> {
     users: [],
   };
 
-  fetchData = (num: number) => {
-    let { users } = this.state;
-    fetch(`https://randomuser.me/api/?results=${num}&inc=name,picture`)
-      .then(resp => resp.json())
-      .then(resp => {
-        let data: Array = [];
-        resp.results.forEach((el: Object, index: number) => {
-          data.push({
-            key: index,
-            first: el.name.first,
-            last: el.name.last,
-            photo: el.picture.medium,
-          });
-        });
-        console.log(users);
-        this.setState({ users: data.slice() }, () => console.log(this.state));
-      })
-      .catch(err => console.log(err));
-  };
+  // fetchData = (num: number) => {
+  //   let { users } = this.state;
+  //   fetch(`https://randomuser.me/api/?results=${num}&inc=name,picture`)
+  //     .then(resp => resp.json())
+  //     .then(resp => {
+  //       let data: Array = [];
+  //       resp.results.forEach((el: Object, index: number) => {
+  //         data.push({
+  //           key: index,
+  //           first: el.name.first,
+  //           last: el.name.last,
+  //           photo: el.picture.medium,
+  //         });
+  //       });
+  //       console.log(users);
+  //       this.setState({ users: data.slice() }, () => console.log(this.state));
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
   componentDidMount() {
-    this.fetchData(1000);
+    this.props.fetchUsers(10);
   }
 
   renderEndlessList = (user: Object) => {
@@ -133,4 +135,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EndlessList;
+const EndlessListContainer = connect(
+  state => {
+    isLoading: state.users.isLoading;
+  },
+  { fetchUsers }
+)(EndlessList);
+
+export { EndlessListContainer as EndlessList };

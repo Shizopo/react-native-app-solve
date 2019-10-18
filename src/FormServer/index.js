@@ -6,14 +6,7 @@ const formServer = data => {
   });
 };
 
-// const serverValidation = fn => {
-//   return fn(data).then(() => {
-//     console.log("data received");
-//   });
-// };
-
 const serverValidation = data => formServer(data);
-// const callAPI = data => serverValidation(data);
 
 const validate = data => {
   let formData = { ...data };

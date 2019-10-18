@@ -16,10 +16,13 @@ import {
   StatusBar,
 } from "react-native";
 
-import FormBody from "./FormBody";
-import FormResult from "./FormResult";
-import EndlessList from "./EndlessList";
-import ProductForm from "./ProductForm";
+import { FormBody } from "../FormBody";
+import FormResult from "../FormResult";
+import EndlessList from "../EndlessList";
+import ProductForm from "../ProductForm";
+
+import { Provider } from "react-redux";
+import { store } from "../../configs/createStore";
 
 type Props = {};
 
@@ -62,25 +65,28 @@ class App extends React.Component<Props, State> {
 
   render() {
     return (
-      <EndlessList />
+      // <EndlessList />
       // <ProductForm />
-      // <ScrollView>
-      //   <View style={styles.container}>
-      //     <FormBody
-      //       onSubmit={this.handleSubmit}
-      //       onCardTypeChange={this.handleCardTypeChange}
-      //     />
-      //     <FormResult
-      //       cardNum={this.state.cardNum}
-      //       cardType={this.state.cardType}
-      //       firstName={this.state.firstName}
-      //       lastName={this.state.lastName}
-      //       isValid={this.state.isValid}
-      //     />
-      //   </View>
 
-      //   <View style={styles.container}></View>
-      // </ScrollView>
+      <Provider store={store}>
+        <ScrollView>
+          <View style={styles.container}>
+            <FormBody
+              onSubmit={this.handleSubmit}
+              onCardTypeChange={this.handleCardTypeChange}
+            />
+            <FormResult
+              cardNum={this.state.cardNum}
+              cardType={this.state.cardType}
+              firstName={this.state.firstName}
+              lastName={this.state.lastName}
+              isValid={this.state.isValid}
+            />
+          </View>
+
+          <View style={styles.container}></View>
+        </ScrollView>
+      </Provider>
     );
   }
 }
