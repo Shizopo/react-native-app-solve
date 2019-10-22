@@ -58,7 +58,6 @@ class FormResult extends React.Component<Props, State> {
     ) {
       return;
     }
-    console.log(this.props);
 
     if (!this.state.isShown) {
       return this.startTimer();
@@ -70,17 +69,10 @@ class FormResult extends React.Component<Props, State> {
       cardNum,
       firstName,
       lastName,
-      // cardType,
+      cardType,
       isValid,
     } = this.props.form.data;
-    console.log(
-      "FormResult component rendered",
-      cardNum,
-      firstName,
-      lastName,
-      // cardType,
-      isValid
-    );
+
     if (!this.state.isShown || !this.props.form.isLoaded) {
       return null;
     }
@@ -95,7 +87,7 @@ class FormResult extends React.Component<Props, State> {
     return (
       <View style={styles.formSection}>
         <Text style={styles.cardDetails}>Card number: {cardNum.slice(-4)}</Text>
-        {/* <Text style={styles.cardDetails}>Card type: {cardType}</Text> */}
+        <Text style={styles.cardDetails}>Card type: {cardType}</Text>
         <Text style={styles.cardDetails}>First Name: {firstName}</Text>
         <Text style={styles.cardDetails}>Last Name: {lastName}</Text>
       </View>

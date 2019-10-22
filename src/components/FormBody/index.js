@@ -13,6 +13,8 @@ import CardDetails from "../CardDetails";
 import { connect } from "react-redux";
 import { submitForm } from "../../actions/onSubmit";
 import { formReducer } from "../../reducers/formReducer";
+// import { handleCardType } from "../../actions/handleCardType";
+// import { cardTypeReducer } from "../../reducers/cardTypeReducer";
 
 type Props = {
   onSubmit: (
@@ -73,8 +75,6 @@ class FormBody extends React.Component<Props, State> {
   // eslint-disable-next-line no-undef
   handleSubmit = () => {
     this.props.submitForm(this.state);
-    // this.pushData(this.state);
-
     return true;
   };
 
