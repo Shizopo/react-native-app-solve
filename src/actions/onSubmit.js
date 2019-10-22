@@ -1,5 +1,4 @@
 import { callAPI } from "../services/ValidationService";
-import { checkCardType } from "../services/CardTypeService";
 
 export const submitForm = formData => (dispatch, getState) => {
   dispatch({

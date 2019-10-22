@@ -1,7 +1,10 @@
 const mockServer = data => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const validationResult = validate(data);
-    setTimeout(() => resolve(validationResult), 500);
+    setTimeout(() => {
+      resolve(validationResult);
+      reject(new Error("Something wrong"));
+    }, 500);
   });
 };
 
@@ -15,7 +18,6 @@ const handleCardType = cardNumber => {
       : (cardType = "Visa");
   }
   return cardType;
-  // console.log("look ma, inside function", formData);
 };
 
 const validate = data => {
