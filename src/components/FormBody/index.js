@@ -6,13 +6,13 @@ import {
   Text,
   TextInput,
   Button,
+  ActivityIndicator,
+  Modal,
 } from "react-native";
 import CardDetails from "../CardDetails";
-import callAPI from "../../FormServer";
 import { connect } from "react-redux";
-import { onSubmit } from "../../actions/onSubmit";
+import { submitForm } from "../../actions/onSubmit";
 import { formReducer } from "../../reducers/formReducer";
-// import serverValidation from "../../FormServer";
 
 type Props = {
   onSubmit: (
@@ -49,7 +49,6 @@ type State = {
 
 class FormBody extends React.Component<Props, State> {
   state = {
-    // value: undefined,
     cardNum: undefined,
     expirationDate: undefined,
     cardCvv: undefined,
@@ -69,14 +68,14 @@ class FormBody extends React.Component<Props, State> {
     isValid: true,
   };
 
-  pushData = (data: Array) => {
-    callAPI(data)
-      .then(resp => {
-        console.log(resp);
-        this.setState({ valid: resp });
-      })
-      .catch(err => console.log(err));
-  };
+  // pushData = (data: Array) => {
+  //   callAPI(data)
+  //     .then(resp => {
+  //       console.log(resp);
+  //       this.setState({ valid: resp });
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
   // validate = (name, value) => {
   //   let valid = { ...this.state.valid };
@@ -130,28 +129,44 @@ class FormBody extends React.Component<Props, State> {
 
   // eslint-disable-next-line no-undef
   handleSubmit = () => {
-    let valid = { ...this.state.valid };
-    let isValid = this.state.isValid;
+    // let valid = { ...this.state.valid };
+    // let isValid = this.state.isValid;
 
-    this.setState({ isValid }, () => {
-      this.props.onSubmit(
-        this.state.cardNum,
-        this.state.firstName,
-        this.state.lastName,
-        this.state.isValid
-      );
-    });
+    // this.setState({ isValid }, () => {
+    //   this.props.onSubmit(
+    //     this.state.cardNum,
+    //     this.state.firstName,
+    //     this.state.lastName,
+    //     this.state.isValid
+    //   );
+    // });
 
-    // this.props.onSubmit(this.state);
-    this.pushData(this.state);
+    this.props.submitForm(this.state);
+    // this.pushData(this.state);
 
     return true;
   };
 
   render() {
-    let { valid } = this.state;
-    console.log(valid);
+    // let { valid } = this.state;
+    let { valid } = this.props.form.data;
 
+    // console.log(this.props.form.data);
+    // if (this.props.form.isLoading) {
+    //   return (
+    //     <Modal
+    //       animationType="slide"
+    //       transparent={false}
+    //       style={styles.loadingModal}
+    //       // visible={this.state.modalVisible}
+    //       // onRequestClose={() => {
+    //       //   Alert.alert("Modal has been closed.");
+    //       // }}
+    //     >
+    //       <ActivityIndicator size="large" color="#0000ff" />
+    //     </Modal>
+    //   );
+    // }
     return (
       <View>
         <View style={styles.formSection}>
@@ -293,6 +308,18 @@ class FormBody extends React.Component<Props, State> {
             onPress={this.handleSubmit}
           />
         </View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          style={styles.loadingModal}
+          visible={this.props.form.isLoading}
+        >
+          <ActivityIndicator
+            style={{ marginTop: 350 }}
+            size="large"
+            color="#0000ff"
+          />
+        </Modal>
       </View>
     );
   }
@@ -331,6 +358,13 @@ const styles = StyleSheet.create({
   submitButton: {
     margin: 40,
   },
+  loadingModal: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
 });
 
 const FormBodyContainer = connect(
@@ -338,7 +372,7 @@ const FormBodyContainer = connect(
     form: state.formReducer,
   }),
   {
-    onSubmit,
+    submitForm,
   }
 )(FormBody);
 

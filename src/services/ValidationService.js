@@ -1,30 +1,29 @@
-const formServer = data => {
+const mockServer = data => {
   return new Promise(resolve => {
-    // setTimeout(() =>
-    resolve(validate(data));
-    // , 2000);
+    const validationResult = validate(data);
+    setTimeout(() => resolve(validationResult), 500);
+    // reject(new Error("Something went wrong")),
   });
 };
 
-const serverValidation = data => formServer(data);
+const callAPI = data => mockServer(data);
 
 const validate = data => {
   let formData = { ...data };
   let valid = { ...data.valid };
 
-  // console.log(valid);
-  // console.log(formData);
   let dataFields = Object.keys(formData);
+
   dataFields.forEach(el => {
     switch (el) {
       case "cardNum": {
-        let cardNumReg = /^[0-9]{16}/;
+        const cardNumReg = /^[0-9]{16}/;
         valid.cardNum = cardNumReg.test(data.cardNum) ? true : false;
         console.log("I validated cardNum and get " + valid.cardNum);
         break;
       }
       case "expirationDate": {
-        let expirationDateReg = /^(0[1-9]|1[0-2])\/\d{2}$/;
+        const expirationDateReg = /^(0[1-9]|1[0-2])\/\d{2}$/;
         valid.expirationDate = expirationDateReg.test(data.expirationDate)
           ? true
           : false;
@@ -34,7 +33,7 @@ const validate = data => {
         break;
       }
       case "cardCvv": {
-        let cardCvvReg = /^[0-9]{3,4}$/;
+        const cardCvvReg = /^[0-9]{3,4}$/;
         valid.cardCvv = cardCvvReg.test(data.cardCvv) ? true : false;
         console.log("I validated card cvv and get " + valid.cardCvv);
         break;
@@ -68,9 +67,16 @@ const validate = data => {
       }
     }
   });
-  // console.log(valid);
-  // console.log(formData);
-  return valid;
+
+  for (let key in valid) {
+    if (valid[key] === false) {
+      formData.isValid = false;
+    }
+  }
+
+  Object.assign(formData.valid, valid);
+
+  return formData;
 };
 
-export default serverValidation;
+export { callAPI };

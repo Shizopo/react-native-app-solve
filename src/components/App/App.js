@@ -17,12 +17,13 @@ import {
 } from "react-native";
 
 import { FormBody } from "../FormBody";
-import FormResult from "../FormResult";
+import { FormResult } from "../FormResult";
 import EndlessList from "../EndlessList";
 import ProductForm from "../ProductForm";
 
 import { Provider } from "react-redux";
 import { store } from "../../configs/createStore";
+import "../../services/ValidationService";
 
 type Props = {};
 

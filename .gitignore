@@ -58,3 +58,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Temp ignore
+/src/actions/fetchUsers.js
+/src/reducers/usersReducer.js
+/src/services/fetchUsersService.js

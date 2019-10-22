@@ -7,6 +7,8 @@ import {
   TextInput,
   Button,
 } from "react-native";
+import { connect } from "react-redux";
+import { formReducer } from "../../reducers/formReducer";
 
 type Props = {
   cardNum?: string,
@@ -50,12 +52,13 @@ class FormResult extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps: Props) {
     if (
-      prevProps.cardNum === this.props.cardNum &&
-      prevProps.firstName === this.props.firstName &&
-      prevProps.lastName === this.props.lastName
+      prevProps.cardNum === this.props.form.data.cardNum &&
+      prevProps.firstName === this.props.form.data.firstName &&
+      prevProps.lastName === this.props.form.data.lastName
     ) {
       return;
     }
+    console.log(this.props);
 
     if (!this.state.isShown) {
       return this.startTimer();
@@ -63,13 +66,34 @@ class FormResult extends React.Component<Props, State> {
   }
 
   render() {
-    const { cardNum, firstName, lastName, cardType, isValid } = this.props;
-    console.log("FormResult component rendered");
-    if (!this.state.isShown) {
+    const {
+      cardNum,
+      firstName,
+      lastName,
+      // cardType,
+      isValid,
+    } = this.props.form.data;
+    console.log(
+      "FormResult component rendered",
+      cardNum,
+      firstName,
+      lastName,
+      // cardType,
+      isValid
+    );
+    if (!this.state.isShown || !this.props.form.isLoaded) {
       return null;
     }
 
-    if (!isValid || !cardNum || !cardType || !firstName || !lastName) {
+    if (
+      !isValid ||
+      this.props.form.err
+      //  ||
+      // !cardNum ||
+      // // !cardType ||
+      // !firstName ||
+      // !lastName
+    ) {
       return (
         <View style={styles.formSection}>
           <Text style={styles.cardDetails}>Error</Text>
@@ -79,7 +103,7 @@ class FormResult extends React.Component<Props, State> {
     return (
       <View style={styles.formSection}>
         <Text style={styles.cardDetails}>Card number: {cardNum.slice(-4)}</Text>
-        <Text style={styles.cardDetails}>Card type: {cardType}</Text>
+        {/* <Text style={styles.cardDetails}>Card type: {cardType}</Text> */}
         <Text style={styles.cardDetails}>First Name: {firstName}</Text>
         <Text style={styles.cardDetails}>Last Name: {lastName}</Text>
       </View>
@@ -102,4 +126,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormResult;
+const FormResultContainer = connect(state => ({
+  form: state.formReducer,
+}))(FormResult);
+
+export { FormResultContainer as FormResult };
