@@ -21,7 +21,6 @@ type Props = {
     lastName?: string,
     isValid: boolean
   ) => void,
-  onCardTypeChange: (cardType: string | void) => void,
 };
 
 type StateValidate = {
@@ -44,7 +43,6 @@ type State = {
   answer?: string,
   valid: StateValidate,
   isValid: boolean,
-  value?: string,
 };
 
 class FormBody extends React.Component<Props, State> {
@@ -68,79 +66,12 @@ class FormBody extends React.Component<Props, State> {
     isValid: true,
   };
 
-  // pushData = (data: Array) => {
-  //   callAPI(data)
-  //     .then(resp => {
-  //       console.log(resp);
-  //       this.setState({ valid: resp });
-  //     })
-  //     .catch(err => console.log(err));
-  // };
-
-  // validate = (name, value) => {
-  //   let valid = { ...this.state.valid };
-
-  //   console.log(name, value, valid);
-
-  //   switch (name) {
-  //     case "cardNum": {
-  //       let cardNumReg = /^[0-9]{16}/;
-  //       valid.cardNum = cardNumReg.test(value) ? true : false;
-  //       break;
-  //     }
-  //     case "expirationDate": {
-  //       let expirationDateReg = /^(0[1-9]|1[0-2])\/\d{2}$/;
-  //       valid.expirationDate = expirationDateReg.test(value) ? true : false;
-  //       break;
-  //     }
-  //     case "cardCvv": {
-  //       let cardCvvReg = /^[0-9]{3,4}$/;
-  //       valid.cardCvv = cardCvvReg.test(value) ? true : false;
-  //       break;
-  //     }
-  //     case "firstName": {
-  //       valid.firstName = value.length < 2 ? false : true;
-  //       break;
-  //     }
-  //     case "lastName": {
-  //       valid.lastName = value.length < 3 ? false : true;
-  //       break;
-  //     }
-  //     case "question": {
-  //       valid.question = value.length < 10 ? false : true;
-  //       break;
-  //     }
-  //     case "answer": {
-  //       valid.answer = value.length < 3 ? false : true;
-  //       break;
-  //     }
-  //     default: {
-  //       console.log("nothing to validate");
-  //       break;
-  //     }
-  //   }
-
-  //   this.setState({ valid, [name]: value }, () => console.log(this.state));
-  // };
-
   handleInput = (name, value) => {
     this.setState({ [name]: value });
   };
 
   // eslint-disable-next-line no-undef
   handleSubmit = () => {
-    // let valid = { ...this.state.valid };
-    // let isValid = this.state.isValid;
-
-    // this.setState({ isValid }, () => {
-    //   this.props.onSubmit(
-    //     this.state.cardNum,
-    //     this.state.firstName,
-    //     this.state.lastName,
-    //     this.state.isValid
-    //   );
-    // });
-
     this.props.submitForm(this.state);
     // this.pushData(this.state);
 
@@ -148,25 +79,7 @@ class FormBody extends React.Component<Props, State> {
   };
 
   render() {
-    // let { valid } = this.state;
     let { valid } = this.props.form.data;
-
-    // console.log(this.props.form.data);
-    // if (this.props.form.isLoading) {
-    //   return (
-    //     <Modal
-    //       animationType="slide"
-    //       transparent={false}
-    //       style={styles.loadingModal}
-    //       // visible={this.state.modalVisible}
-    //       // onRequestClose={() => {
-    //       //   Alert.alert("Modal has been closed.");
-    //       // }}
-    //     >
-    //       <ActivityIndicator size="large" color="#0000ff" />
-    //     </Modal>
-    //   );
-    // }
     return (
       <View>
         <View style={styles.formSection}>
@@ -295,11 +208,6 @@ class FormBody extends React.Component<Props, State> {
             placeholder="Your security answer"
             value={this.state.value}
             onChangeText={val => this.handleInput("answer", val)}
-          />
-
-          <CardDetails
-            cardNum={this.state.cardNum}
-            onCardTypeChange={this.props.onCardTypeChange}
           />
           <Button
             type="submit"

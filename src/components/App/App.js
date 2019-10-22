@@ -27,43 +27,11 @@ import "../../services/ValidationService";
 
 type Props = {};
 
-type State = {
-  cardNum?: string,
-  cardType?: string,
-  firstName?: string,
-  lastName?: string,
-  isValid: boolean,
-};
+type State = {};
 
 console.disableYellowBox = true;
 
 class App extends React.Component<Props, State> {
-  state = {
-    cardNum: undefined,
-    cardType: undefined,
-    firstName: undefined,
-    lastName: undefined,
-    isValid: true,
-  };
-
-  handleSubmit = (
-    cardNum?: string,
-    firstName?: string,
-    lastName?: string,
-    isValid: boolean
-  ) => {
-    this.setState({
-      cardNum: cardNum,
-      firstName: firstName,
-      lastName: lastName,
-      isValid: isValid,
-    });
-  };
-
-  handleCardTypeChange = (cardType: string | void) => {
-    this.setState({ cardType });
-  };
-
   render() {
     return (
       // <EndlessList />
@@ -72,17 +40,8 @@ class App extends React.Component<Props, State> {
       <Provider store={store}>
         <ScrollView>
           <View style={styles.container}>
-            <FormBody
-              onSubmit={this.handleSubmit}
-              onCardTypeChange={this.handleCardTypeChange}
-            />
-            <FormResult
-              cardNum={this.state.cardNum}
-              cardType={this.state.cardType}
-              firstName={this.state.firstName}
-              lastName={this.state.lastName}
-              isValid={this.state.isValid}
-            />
+            <FormBody />
+            <FormResult />
           </View>
 
           <View style={styles.container}></View>
