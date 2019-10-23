@@ -28,7 +28,7 @@ const initialValue = {
   },
 };
 
-export const formReducer = (state = initialValue, action) => {
+export const creditCardReducer = (state = initialValue, action) => {
   switch (action.type) {
     case FORM_SUBMIT_REQUEST:
       return {

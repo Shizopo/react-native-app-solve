@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { formReducer } from "../reducers/formReducer";
+import { creditCardReducer } from "../reducers/creditCardReducer";
 
 export const rootReducer = combineReducers({
-  formReducer,
+  creditCardReducer,
 });

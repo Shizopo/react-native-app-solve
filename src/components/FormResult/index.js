@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-native";
 import { connect } from "react-redux";
-import { formReducer } from "../../reducers/formReducer";
+import { creditCardReducer } from "../../reducers/creditCardReducer";
 
 type Props = {
   cardNum?: string,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 });
 
 const FormResultContainer = connect(state => ({
-  form: state.formReducer,
+  form: state.creditCardReducer,
 }))(FormResult);
 
 export { FormResultContainer as FormResult };

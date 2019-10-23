@@ -1,4 +1,4 @@
-import { callAPI } from "../services/ValidationService";
+import { creditCardService } from "../services/ValidationService";
 import {
   FORM_SUBMIT_REQUEST,
   FORM_SUBMIT_SUCCESS,
@@ -9,7 +9,8 @@ export const submitForm = formData => (dispatch, getState) => {
   dispatch({
     type: FORM_SUBMIT_REQUEST,
   });
-  callAPI(formData)
+  creditCardService
+    .validateCreditCard(formData)
     .then(resp => {
       dispatch({ type: FORM_SUBMIT_SUCCESS, payload: resp });
     })

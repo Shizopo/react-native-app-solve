@@ -12,7 +12,7 @@ import {
 import CardDetails from "../CardDetails";
 import { connect } from "react-redux";
 import { submitForm } from "../../actions/onSubmit";
-import { formReducer } from "../../reducers/formReducer";
+import { creditCardReducer } from "../../reducers/creditCardReducer";
 
 type Props = {
   onSubmit: (
@@ -79,7 +79,6 @@ class FormBody extends React.Component<Props, State> {
   render() {
     let { valid } = this.props.form.data;
     let requestStatus = this.props.form.RequestStatus;
-    console.log(this.props.form.RequestStatus);
     return (
       <View>
         <View style={styles.formSection}>
@@ -277,7 +276,7 @@ const styles = StyleSheet.create({
 
 const FormBodyContainer = connect(
   state => ({
-    form: state.formReducer,
+    form: state.creditCardReducer,
   }),
   {
     submitForm,

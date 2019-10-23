@@ -1,14 +1,13 @@
-const mockServer = data => {
+const callAPI = data => {
   return new Promise((resolve, reject) => {
-    const validationResult = validate(data);
     setTimeout(() => {
-      resolve(validationResult);
+      resolve(data);
       reject(new Error("Something wrong"));
     }, 500);
   });
 };
 
-const callAPI = data => mockServer(data);
+const callValidationApi = data => callAPI(validate(data));
 
 const handleCardType = cardNumber => {
   let cardType = "";
@@ -93,4 +92,12 @@ const validate = data => {
   return formData;
 };
 
-export { callAPI };
+class CreditCardService {
+  validateCreditCard(data) {
+    return callValidationApi(data);
+  }
+}
+
+const creditCardService = new CreditCardService();
+
+export { creditCardService };
