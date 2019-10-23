@@ -1,9 +1,34 @@
+// @flow
+
 import {
   FORM_SUBMIT_REQUEST,
   FORM_SUBMIT_SUCCESS,
   FORM_SUBMIT_FAILURE,
 } from "../types/actionTypes";
 import { RequestStatus } from "../utils/RequestStatus";
+
+type State = {
+  RequestStatus: Object,
+  data: {
+    cardNum: string,
+    expirationDate: string,
+    cardCvv: string,
+    firstName: string,
+    lastName: string,
+    question: string,
+    answer: string,
+    valid: {
+      cardNum: boolean,
+      expirationDate: boolean,
+      cardCvv: boolean,
+      firstName: boolean,
+      lastName: boolean,
+      question: boolean,
+      answer: boolean,
+    },
+    isValid: boolean,
+  },
+};
 
 const initialValue = {
   RequestStatus: RequestStatus.Default,
@@ -28,7 +53,10 @@ const initialValue = {
   },
 };
 
-export const creditCardReducer = (state = initialValue, action) => {
+export const creditCardReducer = (
+  state: State = initialValue,
+  action: Object
+) => {
   switch (action.type) {
     case FORM_SUBMIT_REQUEST:
       return {

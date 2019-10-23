@@ -1,5 +1,30 @@
-const callAPI = data => {
-  return new Promise((resolve, reject) => {
+// @flow
+
+type DataIsValid = {
+  cardNum: boolean,
+  expirationDate: boolean,
+  cardCvv: boolean,
+  firstName: boolean,
+  lastName: boolean,
+  question: boolean,
+  answer: boolean,
+};
+
+type Data = {
+  cardNum: ?string,
+  expirationDate: ?string,
+  cardCvv?: string,
+  firstName?: string,
+  lastName?: string,
+  question?: string,
+  answer?: string,
+  valid: DataIsValid,
+  isValid: boolean,
+  cardType: string,
+};
+
+const callAPI = (data: Data) => {
+  return new Promise<Data | string>((resolve, reject) => {
     setTimeout(() => {
       resolve(data);
       reject(new Error("Something wrong"));
@@ -7,7 +32,7 @@ const callAPI = data => {
   });
 };
 
-const callValidationApi = data => callAPI(validate(data));
+const callValidationApi = (data: Data) => callAPI(validate(data));
 
 const handleCardType = cardNumber => {
   let cardType = "";
@@ -19,25 +44,29 @@ const handleCardType = cardNumber => {
   return cardType;
 };
 
-const validate = data => {
+const validate = (data: Data) => {
   let formData = { ...data };
   let valid = { ...data.valid };
 
   let dataFields = Object.keys(formData);
 
-  dataFields.forEach(el => {
+  dataFields.forEach((el: string) => {
     switch (el) {
       case "cardNum": {
         const cardNumReg = /^[0-9]{16}/;
-        valid.cardNum = cardNumReg.test(data.cardNum) ? true : false;
+        if (data.cardNum) {
+          valid.cardNum = cardNumReg.test(data.cardNum) ? true : false;
+        }
         // console.log("I validated cardNum and get " + valid.cardNum);
         break;
       }
       case "expirationDate": {
         const expirationDateReg = /^(0[1-9]|1[0-2])\/\d{2}$/;
-        valid.expirationDate = expirationDateReg.test(data.expirationDate)
-          ? true
-          : false;
+        if (data.expirationDate) {
+          valid.expirationDate = expirationDateReg.test(data.expirationDate)
+            ? true
+            : false;
+        }
         // console.log(
         //   "I validated expiration date and get " + valid.expirationDate
         // );
@@ -45,7 +74,9 @@ const validate = data => {
       }
       case "cardCvv": {
         const cardCvvReg = /^[0-9]{3,4}$/;
-        valid.cardCvv = cardCvvReg.test(data.cardCvv) ? true : false;
+        if (data.cardCvv) {
+          valid.cardCvv = cardCvvReg.test(data.cardCvv) ? true : false;
+        }
         // console.log("I validated card cvv and get " + valid.cardCvv);
         break;
       }
@@ -93,7 +124,7 @@ const validate = data => {
 };
 
 class CreditCardService {
-  validateCreditCard(data) {
+  validateCreditCard(data: Data) {
     return callValidationApi(data);
   }
 }

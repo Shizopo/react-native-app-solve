@@ -1,3 +1,5 @@
+// @flow
+
 import React from "react";
 import {
   StyleSheet,
@@ -16,6 +18,7 @@ type Props = {
   firstName?: string,
   lastName?: string,
   isValid: boolean,
+  form: Object,
 };
 
 type State = {

@@ -1,3 +1,5 @@
+// @flow
+
 import { creditCardService } from "../services/ValidationService";
 import {
   FORM_SUBMIT_REQUEST,
@@ -5,7 +7,12 @@ import {
   FORM_SUBMIT_FAILURE,
 } from "../types/actionTypes";
 
-export const submitForm = formData => (dispatch, getState) => {
+export const submitForm = (formData: Object) => (
+  dispatch: Object => void,
+  getState: Object => void
+) => {
+  console.log(typeof dispatch);
+  console.log(typeof getState);
   dispatch({
     type: FORM_SUBMIT_REQUEST,
   });

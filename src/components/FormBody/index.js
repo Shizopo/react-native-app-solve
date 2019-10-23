@@ -1,3 +1,5 @@
+// @flow
+
 import React from "react";
 import {
   StyleSheet,
@@ -15,12 +17,8 @@ import { submitForm } from "../../actions/onSubmit";
 import { creditCardReducer } from "../../reducers/creditCardReducer";
 
 type Props = {
-  onSubmit: (
-    cardNum?: string,
-    firstName?: string,
-    lastName?: string,
-    isValid: boolean
-  ) => void,
+  submitForm: State => void,
+  form: Object,
 };
 
 type StateValidate = {
@@ -43,7 +41,15 @@ type State = {
   answer?: string,
   valid: StateValidate,
   isValid: boolean,
+  value?: string,
 };
+
+// type TextInputProps = {
+//   id: string,
+//   name: string,
+//   type: string,
+//   minLength: string,
+// };
 
 class FormBody extends React.Component<Props, State> {
   state = {
@@ -64,6 +70,7 @@ class FormBody extends React.Component<Props, State> {
       answer: true,
     },
     isValid: true,
+    value: undefined,
   };
 
   handleInput = (name, value) => {
@@ -102,7 +109,7 @@ class FormBody extends React.Component<Props, State> {
             onChangeText={val => this.handleInput("cardNum", val)}
           />
 
-          <View className="creditCardSecurity">
+          <View>
             <Text style={styles.label}>Card expiry date</Text>
             <TextInput
               style={[
