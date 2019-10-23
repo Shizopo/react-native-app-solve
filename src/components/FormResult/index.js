@@ -54,10 +54,13 @@ class FormResult extends React.Component<Props, State> {
   };
 
   componentDidUpdate(prevProps: Props) {
+    let { data } = this.props.form;
+    let prevData = {};
+    Object.assign(prevData, prevProps.form.data);
     if (
-      prevProps.cardNum === this.props.form.data.cardNum &&
-      prevProps.firstName === this.props.form.data.firstName &&
-      prevProps.lastName === this.props.form.data.lastName
+      prevData.cardNum === data.cardNum &&
+      prevData.firstName === data.firstName &&
+      prevData.lastName === data.lastName
     ) {
       return;
     }
@@ -68,6 +71,7 @@ class FormResult extends React.Component<Props, State> {
   }
 
   render() {
+    console.log("Result rendered");
     const {
       cardNum,
       firstName,

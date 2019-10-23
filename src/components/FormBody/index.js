@@ -44,13 +44,6 @@ type State = {
   value?: string,
 };
 
-// type TextInputProps = {
-//   id: string,
-//   name: string,
-//   type: string,
-//   minLength: string,
-// };
-
 class FormBody extends React.Component<Props, State> {
   state = {
     cardNum: undefined,
@@ -99,10 +92,6 @@ class FormBody extends React.Component<Props, State> {
                 borderBottomColor: valid.cardNum === false ? "#ff0000" : "#000",
               },
             ]}
-            type="text"
-            name="cardNum"
-            id="cardNum"
-            minLength={16}
             maxLength={16}
             placeholder="1111222233334444"
             value={this.state.value}
@@ -119,9 +108,6 @@ class FormBody extends React.Component<Props, State> {
                     valid.expirationDate === false ? "#ff0000" : "#000",
                 },
               ]}
-              type="text"
-              name="expirationDate"
-              id="expirationDate"
               maxLength={5}
               placeholder="MM/YY"
               value={this.state.value}
@@ -137,11 +123,6 @@ class FormBody extends React.Component<Props, State> {
                     valid.cardCvv === false ? "#ff0000" : "#000",
                 },
               ]}
-              type="text"
-              inputMode="numeric"
-              name="cardCvv"
-              id="cardCvv"
-              minLength={3}
               maxLength={4}
               placeholder="1234"
               value={this.state.value}
@@ -158,9 +139,6 @@ class FormBody extends React.Component<Props, State> {
                   valid.firstName === false ? "#ff0000" : "#000",
               },
             ]}
-            type="text"
-            name="firstName"
-            id="firstName"
             placeholder="Jane"
             value={this.state.value}
             onChangeText={val => this.handleInput("firstName", val)}
@@ -175,9 +153,6 @@ class FormBody extends React.Component<Props, State> {
                   valid.lastName === false ? "#ff0000" : "#000",
               },
             ]}
-            type="text"
-            name="lastName"
-            id="lastName"
             placeholder="Doe"
             value={this.state.value}
             onChangeText={val => this.handleInput("lastName", val)}
@@ -192,9 +167,6 @@ class FormBody extends React.Component<Props, State> {
                   valid.question === false ? "#ff0000" : "#000",
               },
             ]}
-            type="text"
-            name="question"
-            id="question"
             placeholder="Your security question"
             value={this.state.value}
             onChangeText={val => this.handleInput("question", val)}
@@ -208,19 +180,11 @@ class FormBody extends React.Component<Props, State> {
                 borderBottomColor: valid.answer === false ? "#ff0000" : "#000",
               },
             ]}
-            type="text"
-            name="answer"
-            id="answer"
             placeholder="Your security answer"
             value={this.state.value}
             onChangeText={val => this.handleInput("answer", val)}
           />
-          <Button
-            type="submit"
-            title="Submit"
-            style={styles.submitButton}
-            onPress={this.handleSubmit}
-          />
+          <Button title="Submit" onPress={this.handleSubmit} />
         </View>
         <Modal
           animationType="fade"

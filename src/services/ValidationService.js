@@ -56,6 +56,8 @@ const validate = (data: Data) => {
         const cardNumReg = /^[0-9]{16}/;
         if (data.cardNum) {
           valid.cardNum = cardNumReg.test(data.cardNum) ? true : false;
+        } else {
+          valid.cardNum = false;
         }
         // console.log("I validated cardNum and get " + valid.cardNum);
         break;
@@ -66,6 +68,8 @@ const validate = (data: Data) => {
           valid.expirationDate = expirationDateReg.test(data.expirationDate)
             ? true
             : false;
+        } else {
+          valid.expirationDate = false;
         }
         // console.log(
         //   "I validated expiration date and get " + valid.expirationDate
@@ -76,6 +80,8 @@ const validate = (data: Data) => {
         const cardCvvReg = /^[0-9]{3,4}$/;
         if (data.cardCvv) {
           valid.cardCvv = cardCvvReg.test(data.cardCvv) ? true : false;
+        } else {
+          valid.cardCvv = false;
         }
         // console.log("I validated card cvv and get " + valid.cardCvv);
         break;
