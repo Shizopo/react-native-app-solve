@@ -73,7 +73,7 @@ class FormResult extends React.Component<Props, State> {
       isValid,
     } = this.props.form.data;
 
-    if (!this.state.isShown || !this.props.form.isLoaded) {
+    if (!this.state.isShown || !this.props.form.requestStatus === "isLoaded") {
       return null;
     }
 

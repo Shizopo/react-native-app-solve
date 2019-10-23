@@ -1,6 +1,12 @@
+import {
+  FORM_SUBMIT_REQUEST,
+  FORM_SUBMIT_SUCCESS,
+  FORM_SUBMIT_FAILURE,
+} from "../types/actionTypes";
+import { RequestStatus } from "../utils/RequestStatus";
+
 const initialValue = {
-  isLoading: false,
-  isLoaded: false,
+  RequestStatus: RequestStatus.Default,
   data: {
     cardNum: "",
     expirationDate: "",
@@ -24,23 +30,21 @@ const initialValue = {
 
 export const formReducer = (state = initialValue, action) => {
   switch (action.type) {
-    case "FORM_SUBMIT_REQUEST":
+    case FORM_SUBMIT_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        RequestStatus: RequestStatus.isLoading,
       };
-    case "FORM_SUBMIT_FAILURE":
+    case FORM_SUBMIT_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        isLoaded: true,
+        RequestStatus: RequestStatus.isLoaded,
         err: action.err,
       };
-    case "FORM_SUBMIT_SUCCESS":
+    case FORM_SUBMIT_SUCCESS:
       return {
         ...state,
-        isLoading: false,
-        isLoaded: true,
+        RequestStatus: RequestStatus.isLoaded,
         data: action.payload,
       };
 

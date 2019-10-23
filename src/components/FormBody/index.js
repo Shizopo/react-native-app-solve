@@ -13,8 +13,6 @@ import CardDetails from "../CardDetails";
 import { connect } from "react-redux";
 import { submitForm } from "../../actions/onSubmit";
 import { formReducer } from "../../reducers/formReducer";
-// import { handleCardType } from "../../actions/handleCardType";
-// import { cardTypeReducer } from "../../reducers/cardTypeReducer";
 
 type Props = {
   onSubmit: (
@@ -80,6 +78,8 @@ class FormBody extends React.Component<Props, State> {
 
   render() {
     let { valid } = this.props.form.data;
+    let requestStatus = this.props.form.RequestStatus;
+    console.log(this.props.form.RequestStatus);
     return (
       <View>
         <View style={styles.formSection}>
@@ -220,7 +220,7 @@ class FormBody extends React.Component<Props, State> {
           animationType="fade"
           transparent={true}
           style={styles.loadingModal}
-          visible={this.props.form.isLoading}
+          visible={requestStatus === "isLoading"}
         >
           <ActivityIndicator
             style={{ marginTop: 350 }}
