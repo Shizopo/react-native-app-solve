@@ -1,30 +1,32 @@
 // @flow
 
-type DataIsValid = {
-  cardNum: boolean,
-  expirationDate: boolean,
-  cardCvv: boolean,
-  firstName: boolean,
-  lastName: boolean,
-  question: boolean,
-  answer: boolean,
-};
+import type { Data } from "../types/formDataTypes.js";
 
-type Data = {
-  cardNum: ?string,
-  expirationDate: ?string,
-  cardCvv?: string,
-  firstName?: string,
-  lastName?: string,
-  question?: string,
-  answer?: string,
-  valid: DataIsValid,
-  isValid: boolean,
-  cardType: string,
-};
+// type DataIsValid = {
+//   cardNum: boolean,
+//   expirationDate: boolean,
+//   cardCvv: boolean,
+//   firstName: boolean,
+//   lastName: boolean,
+//   question: boolean,
+//   answer: boolean,
+// };
+
+// type Data = {
+//   cardNum: ?string,
+//   expirationDate: ?string,
+//   cardCvv?: string,
+//   firstName?: string,
+//   lastName?: string,
+//   question?: string,
+//   answer?: string,
+//   valid: DataIsValid,
+//   isValid: boolean,
+//   cardType: string,
+// };
 
 const callAPI = (data: Data) => {
-  return new Promise<Data | string>((resolve, reject) => {
+  return new Promise<Data>((resolve, reject) => {
     setTimeout(() => {
       resolve(data);
       reject(new Error("Something wrong"));
@@ -59,7 +61,6 @@ const validate = (data: Data) => {
         } else {
           valid.cardNum = false;
         }
-        // console.log("I validated cardNum and get " + valid.cardNum);
         break;
       }
       case "expirationDate": {
@@ -71,9 +72,6 @@ const validate = (data: Data) => {
         } else {
           valid.expirationDate = false;
         }
-        // console.log(
-        //   "I validated expiration date and get " + valid.expirationDate
-        // );
         break;
       }
       case "cardCvv": {
@@ -83,34 +81,28 @@ const validate = (data: Data) => {
         } else {
           valid.cardCvv = false;
         }
-        // console.log("I validated card cvv and get " + valid.cardCvv);
         break;
       }
       case "firstName": {
         valid.firstName =
           !data.firstName || data.firstName.length < 2 ? false : true;
-        // console.log("I validated first name and get " + valid.firstName);
         break;
       }
       case "lastName": {
         valid.lastName =
           !data.lastName || data.lastName.length < 3 ? false : true;
-        // console.log("I validated last name and get " + valid.lastName);
         break;
       }
       case "question": {
         valid.question =
           !data.question || data.question.length < 10 ? false : true;
-        // console.log("I validated security question and get " + valid.question);
         break;
       }
       case "answer": {
         valid.answer = !data.answer || data.answer.length < 3 ? false : true;
-        // console.log("I validated security answer and get " + valid.answer);
         break;
       }
       default: {
-        // console.log("something else");
         break;
       }
     }

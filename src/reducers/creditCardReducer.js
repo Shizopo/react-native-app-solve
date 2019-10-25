@@ -6,28 +6,11 @@ import {
   FORM_SUBMIT_FAILURE,
 } from "../types/actionTypes";
 import { RequestStatus } from "../utils/RequestStatus";
+import type { Data } from "../types/formDataTypes.js";
 
 type State = {
-  RequestStatus: Object,
-  data: {
-    cardNum: string,
-    expirationDate: string,
-    cardCvv: string,
-    firstName: string,
-    lastName: string,
-    question: string,
-    answer: string,
-    valid: {
-      cardNum: boolean,
-      expirationDate: boolean,
-      cardCvv: boolean,
-      firstName: boolean,
-      lastName: boolean,
-      question: boolean,
-      answer: boolean,
-    },
-    isValid: boolean,
-  },
+  RequestStatus: string,
+  data: Data,
 };
 
 const initialValue = {
@@ -55,7 +38,11 @@ const initialValue = {
 
 export const creditCardReducer = (
   state: State = initialValue,
-  action: Object
+  action: {
+    type: string,
+    err?: string,
+    payload?: Data,
+  }
 ) => {
   switch (action.type) {
     case FORM_SUBMIT_REQUEST:

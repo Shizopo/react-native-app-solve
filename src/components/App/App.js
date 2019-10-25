@@ -16,14 +16,14 @@ import {
   StatusBar,
 } from "react-native";
 
-import { FormBody } from "../FormBody";
-import { FormResult } from "../FormResult";
+import FormBody from "../FormBody";
+import FormResult from "../FormResult";
 import EndlessList from "../EndlessList";
 import ProductForm from "../ProductForm";
 
 import { Provider } from "react-redux";
 import { store } from "../../configs/createStore";
-import "../../services/ValidationService";
+import "../../services/CreditCardService";
 
 type Props = {};
 
@@ -44,7 +44,7 @@ class App extends React.Component<Props, State> {
             <FormResult />
           </View>
 
-          <View style={styles.container}></View>
+          {/* <View style={styles.container}></View> */}
         </ScrollView>
       </Provider>
     );
