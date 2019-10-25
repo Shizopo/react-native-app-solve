@@ -34,7 +34,7 @@ class ProductForm extends React.Component<Props, State> {
     editingMode: false,
   };
 
-  handleInput = (name: string, value: string) => {
+  handleInput = (name: string, value: string | number) => {
     this.setState({ [name]: value });
   };
 
