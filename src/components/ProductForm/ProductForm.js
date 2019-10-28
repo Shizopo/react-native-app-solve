@@ -11,9 +11,7 @@ import {
   Picker,
 } from "react-native";
 
-type Props = {
-  styles?: StyleSheet.Styles,
-};
+type Props = {};
 
 type State = {
   productTitle: string,

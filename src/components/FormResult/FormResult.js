@@ -10,14 +10,14 @@ import {
   Button,
 } from "react-native";
 import { creditCardReducer } from "../../reducers/creditCardReducer";
+import type { Data } from "../../types/formDataTypes.js";
 
 type Props = {
-  cardNum?: string,
-  cardType?: string,
-  firstName?: string,
-  lastName?: string,
-  isValid: boolean,
-  form: Object,
+  form: {
+    requestStatus: string,
+    data: Data,
+    err?: string,
+  },
 };
 
 type State = {
@@ -92,7 +92,9 @@ class FormResult extends React.Component<Props, State> {
     }
     return (
       <View style={styles.formSection}>
-        <Text style={styles.cardDetails}>Card number: {cardNum.slice(-4)}</Text>
+        <Text style={styles.cardDetails}>
+          Card number: {cardNum ? cardNum.slice(-4) : false}
+        </Text>
         <Text style={styles.cardDetails}>Card type: {cardType}</Text>
         <Text style={styles.cardDetails}>First Name: {firstName}</Text>
         <Text style={styles.cardDetails}>Last Name: {lastName}</Text>
