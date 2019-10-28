@@ -13,95 +13,40 @@ import { creditCardReducer } from "../../reducers/creditCardReducer";
 import type { Data } from "../../types/formDataTypes.js";
 
 type Props = {
-  form: {
-    requestStatus: string,
-    data: Data,
-    err?: string,
-  },
-};
-
-type State = {
+  data: Data,
   isShown: boolean,
-  timerId?: TimeoutID,
-  timerStart?: number,
+  requestStatus: string,
+  err?: string,
 };
 
-class FormResult extends React.Component<Props, State> {
-  state = {
-    isShown: false,
-    timerId: undefined,
-    timerStart: undefined,
-  };
+type State = {};
 
-  startTimer = () => {
-    let timerId = setTimeout(() => {
-      this.setState(
-        {
-          isShown: false,
-          timerId: undefined,
-          timerStart: undefined,
-        },
-        () => console.log("expired result")
-      );
-    }, 5000);
+const FormResult = ({ data, isShown, requestStatus, err }: Props) => {
+  const { cardNum, firstName, lastName, cardType, isValid } = data;
 
-    this.setState({
-      isShown: true,
-      timerId,
-      timerStart: Date.now(),
-    });
-  };
-
-  componentDidUpdate(prevProps: Props) {
-    let { data } = this.props.form;
-    let prevData = {};
-    Object.assign(prevData, prevProps.form.data);
-    if (
-      prevData.cardNum === data.cardNum &&
-      prevData.firstName === data.firstName &&
-      prevData.lastName === data.lastName
-    ) {
-      return;
-    }
-
-    if (!this.state.isShown) {
-      return this.startTimer();
-    }
+  if (!isShown || !requestStatus === "isLoaded") {
+    return null;
   }
 
-  render() {
-    console.log("Result rendered");
-    const {
-      cardNum,
-      firstName,
-      lastName,
-      cardType,
-      isValid,
-    } = this.props.form.data;
-
-    if (!this.state.isShown || !this.props.form.requestStatus === "isLoaded") {
-      return null;
-    }
-
-    if (!isValid || this.props.form.err) {
-      return (
-        <View style={styles.formSection}>
-          <Text style={styles.cardDetails}>Error</Text>
-        </View>
-      );
-    }
+  if (!isValid || err) {
     return (
       <View style={styles.formSection}>
-        <Text style={styles.cardDetails}>
-          Card number: {cardNum ? cardNum.slice(-4) : false}
-        </Text>
-        <Text style={styles.cardDetails}>Card type: {cardType}</Text>
-        <Text style={styles.cardDetails}>First Name: {firstName}</Text>
-        <Text style={styles.cardDetails}>Last Name: {lastName}</Text>
+        <Text style={styles.cardDetails}>Error</Text>
       </View>
     );
   }
-}
+
+  return (
+    <View style={styles.formSection}>
+      <Text style={styles.cardDetails}>
+        Card number: {cardNum ? cardNum.slice(-4) : false}
+      </Text>
+      <Text style={styles.cardDetails}>Card type: {cardType}</Text>
+      <Text style={styles.cardDetails}>First Name: {firstName}</Text>
+      <Text style={styles.cardDetails}>Last Name: {lastName}</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   formSection: {
