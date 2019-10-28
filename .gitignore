@@ -63,3 +63,4 @@ buck-out/
 /src/actions/fetchUsers.js
 /src/reducers/usersReducer.js
 /src/services/fetchUsersService.js
+/src/components/CardDetails/

@@ -1,6 +1,6 @@
 // @flow
 
-type DataIsValid = {
+export type DataIsValid = {
   cardNum: boolean,
   expirationDate: boolean,
   cardCvv: boolean,
@@ -21,4 +21,5 @@ export type Data = {
   valid: DataIsValid,
   isValid: boolean,
   cardType?: string,
+  value?: string,
 };

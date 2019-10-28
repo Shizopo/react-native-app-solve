@@ -9,16 +9,22 @@ import {
   Text,
   Image,
 } from "react-native";
-import { connect } from "react-redux";
+import EndlessList from "./EndlessList";
+// import { connect } from "react-redux";
 // import { fetchUsers } from "../../actions/fetchUsers";
 
 type Props = {};
 
 type State = {
-  users: Array<{ key: number, first: string, last: string, photo: string }>,
+  users: Array<{
+    key: number,
+    first: string,
+    last: string,
+    photo: string,
+  }>,
 };
 
-class EndlessList extends React.Component<Props, State> {
+class EndlessListContainer extends React.Component<Props, State> {
   state = {
     users: [],
   };
@@ -150,4 +156,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EndlessList;
+export default EndlessListContainer;
