@@ -1,15 +1,6 @@
 // @flow
 
 import React from "react";
-import {
-  Platform,
-  StyleSheet,
-  View,
-  Button,
-  Text,
-  TextInput,
-  Picker,
-} from "react-native";
 import ProductForm from "./ProductForm";
 
 type Props = {};
@@ -50,32 +41,9 @@ class ProductFormContainer extends React.Component<Props, State> {
     );
   };
 
-  // renderResult = () => {
-  //   if (
-  //     this.state.productTitle ||
-  //     this.state.productWeight ||
-  //     this.state.productSize ||
-  //     this.state.productOrigin
-  //   ) {
-  //     return (
-  //       <View style={styles.formResult}>
-  //         <Text style={styles.resultString}>
-  //           {JSON.stringify(this.state.productTitle)}
-  //         </Text>
-  //         <Text>{JSON.stringify(this.state.productWeight)}</Text>
-  //         <Text>{JSON.stringify(this.state.productSize)}</Text>
-  //         <Text>{JSON.stringify(this.state.productOrigin)}</Text>
-  //       </View>
-  //     );
-  //   } else {
-  //     return null;
-  //   }
-  // };
-
   render() {
     return (
       <ProductForm
-        // renderResult={this.renderResult}
         onCreate={this.onCreate}
         onEdit={this.onEdit}
         handleInput={this.handleInput}

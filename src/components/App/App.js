@@ -35,20 +35,20 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       // <EndlessList />
-      <ProductForm />
+      // <ProductForm />
 
       // <UsersList />
 
-      // <Provider store={store}>
-      //   <ScrollView>
-      //     <View style={styles.container}>
-      //       <FormBody />
-      //       <FormResult />
-      //     </View>
+      <Provider store={store}>
+        <ScrollView>
+          <View style={styles.container}>
+            <FormBody />
+            <FormResult />
+          </View>
 
-      //     {/* <View style={styles.container}></View> */}
-      //   </ScrollView>
-      // </Provider>
+          {/* <View style={styles.container}></View> */}
+        </ScrollView>
+      </Provider>
     );
   }
 }
