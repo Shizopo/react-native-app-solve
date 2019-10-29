@@ -1,1 +1,3 @@
-export { default } from "./ProductForm";
+// @flow
+
+export { default } from "./ProductFormContainer";

@@ -20,7 +20,7 @@ import FormBody from "../FormBody";
 import FormResult from "../FormResult";
 import EndlessList from "../EndlessList";
 import ProductForm from "../ProductForm";
-
+import UsersList from "../UsersList-testTask";
 import { Provider } from "react-redux";
 import { store } from "../../configs/createStore";
 import "../../services/CreditCardService";
@@ -35,18 +35,20 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       // <EndlessList />
-      // <ProductForm />
+      <ProductForm />
 
-      <Provider store={store}>
-        <ScrollView>
-          <View style={styles.container}>
-            <FormBody />
-            <FormResult />
-          </View>
+      // <UsersList />
 
-          {/* <View style={styles.container}></View> */}
-        </ScrollView>
-      </Provider>
+      // <Provider store={store}>
+      //   <ScrollView>
+      //     <View style={styles.container}>
+      //       <FormBody />
+      //       <FormResult />
+      //     </View>
+
+      //     {/* <View style={styles.container}></View> */}
+      //   </ScrollView>
+      // </Provider>
     );
   }
 }
