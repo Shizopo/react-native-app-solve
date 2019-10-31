@@ -19,10 +19,12 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["react", "prettier", "eslint-plugin-flowtype"],
+  plugins: ["react", "prettier", "eslint-plugin-flowtype", "react-hooks"],
   rules: {
     semi: ["error", "always"],
     quotes: ["error", "double"],
-    "prettier/prettier": ["error"],
+    "prettier/prettier": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
   },
 };
