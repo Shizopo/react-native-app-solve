@@ -11,6 +11,9 @@ import {
   ActivityIndicator,
   Modal,
 } from "react-native";
+import { submitForm } from "../../actions/onSubmit";
+import { connect } from "react-redux";
+import { useFormBody } from "./useFormBody";
 import type { Data } from "../../types/formDataTypes";
 
 type Props = {
@@ -20,12 +23,9 @@ type Props = {
   handleSubmit: () => void,
 };
 
-const FormBody = ({
-  data,
-  requestStatus,
-  handleInput,
-  handleSubmit,
-}: Props) => {
+const FormBody = form => {
+  let { data, handleInput, handleSubmit } = useFormBody(submitForm);
+  let requestStatus = form.requestStatus;
   return (
     <View>
       <View style={styles.formSection}>
@@ -37,12 +37,11 @@ const FormBody = ({
             styles.input,
             {
               borderBottomColor:
-                data.valid.cardNum === false ? "#ff0000" : "#000",
+                form.data.valid.cardNum === false ? "#ff0000" : "#000",
             },
           ]}
           maxLength={16}
           placeholder="1111222233334444"
-          value={data.value}
           onChangeText={val => handleInput("cardNum", val)}
         />
 
@@ -58,7 +57,6 @@ const FormBody = ({
             ]}
             maxLength={5}
             placeholder="MM/YY"
-            value={data.value}
             onChangeText={val => handleInput("expirationDate", val)}
           />
 
@@ -73,7 +71,6 @@ const FormBody = ({
             ]}
             maxLength={4}
             placeholder="1234"
-            value={data.value}
             onChangeText={val => handleInput("cardCvv", val)}
           />
         </View>
@@ -88,7 +85,6 @@ const FormBody = ({
             },
           ]}
           placeholder="Jane"
-          value={data.value}
           onChangeText={val => handleInput("firstName", val)}
         />
 
@@ -102,7 +98,6 @@ const FormBody = ({
             },
           ]}
           placeholder="Doe"
-          value={data.value}
           onChangeText={val => handleInput("lastName", val)}
         />
 
@@ -116,7 +111,6 @@ const FormBody = ({
             },
           ]}
           placeholder="Your security question"
-          value={data.value}
           onChangeText={val => handleInput("question", val)}
         />
 
@@ -130,7 +124,6 @@ const FormBody = ({
             },
           ]}
           placeholder="Your security answer"
-          value={data.value}
           onChangeText={val => handleInput("answer", val)}
         />
         <Button title="Submit" onPress={handleSubmit} />
@@ -150,7 +143,6 @@ const FormBody = ({
     </View>
   );
 };
-// }
 
 const styles = StyleSheet.create({
   formSection: {
@@ -194,4 +186,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormBody;
+const FormBodyContainer = connect(
+  state => ({
+    form: state.creditCardReducer,
+  }),
+  {
+    submitForm,
+  }
+)(FormBody);
+
+export default FormBodyContainer;
