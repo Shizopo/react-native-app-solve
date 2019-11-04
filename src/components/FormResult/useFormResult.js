@@ -16,7 +16,12 @@ type State = {
   timerStart?: number,
 };
 
-export const useFormResult = (cardNum, cardType, firstName, lastName) => {
+export const useFormResult = (
+  cardNum: string,
+  cardType: string,
+  firstName: string,
+  lastName: string
+) => {
   const [isShown, setIsShown] = useState(false);
   const [timerId, setTimerId] = useState(undefined);
   const [timerStart, setTimerStart] = useState(undefined);

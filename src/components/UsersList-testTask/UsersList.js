@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   FlatList,
@@ -10,9 +10,32 @@ import {
 } from "react-native";
 import { useUsersList } from "./useUsersList";
 
+const renderUsersList = (user, handleCheckbox) => {
+  return (
+    <>
+      <View style={styles.userCard}>
+        <View style={styles.userName}>
+          <Text style={[styles.mainText, styles.userNumber]}>{user.key}</Text>
+          <Text style={[styles.mainText, styles.userFirstName]}>
+            {user.first}
+          </Text>
+          <Text style={[styles.mainText, styles.userLastName]}>
+            {user.last}
+          </Text>
+        </View>
+        <Switch
+          onValueChange={val => handleCheckbox(val, user.key)}
+          value={user.isChecked}
+        />
+      </View>
+      <View style={styles.separator} />
+    </>
+  );
+};
+
 const UsersList = () => {
   const {
-    data,
+    users,
     userInput,
     isSomethingSelected,
     handleInput,
@@ -21,37 +44,14 @@ const UsersList = () => {
     onDelete,
   } = useUsersList();
 
-  const renderUsersList = user => {
-    return (
-      <>
-        <View style={styles.userCard}>
-          <View style={styles.userName}>
-            <Text style={[styles.mainText, styles.userNumber]}>{user.key}</Text>
-            <Text style={[styles.mainText, styles.userFirstName]}>
-              {user.first}
-            </Text>
-            <Text style={[styles.mainText, styles.userLastName]}>
-              {user.last}
-            </Text>
-          </View>
-          <Switch
-            onValueChange={val => handleCheckbox(val, user.key)}
-            value={user.isChecked}
-          />
-        </View>
-        <View style={styles.separator} />
-      </>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.listContainer}
-        data={data}
-        extraData={data}
+        data={users}
+        extraData={users}
         keyExtractor={item => item.key.toString()}
-        renderItem={({ item }) => renderUsersList(item)}
+        renderItem={({ item }) => renderUsersList(item, handleCheckbox)}
         initialNumToRender={10}
         windowSize={11}
       />

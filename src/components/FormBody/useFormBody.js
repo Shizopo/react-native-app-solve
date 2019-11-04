@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import type { Data } from "../../types/formDataTypes";
 
-export const useFormBody = submitForm => {
+export const useFormBody = (submitForm: Data => void) => {
   const [data, setData] = useState({
     cardNum: "",
     expirationDate: "",

@@ -37,7 +37,7 @@ const FormBody = form => {
             styles.input,
             {
               borderBottomColor:
-                form.data.valid.cardNum === false ? "#ff0000" : "#000",
+                data.valid.cardNum === false ? "#ff0000" : "#000",
             },
           ]}
           maxLength={16}

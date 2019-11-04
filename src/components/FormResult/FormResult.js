@@ -14,15 +14,14 @@ import { creditCardReducer } from "../../reducers/creditCardReducer";
 import { useFormResult } from "./useFormResult";
 import type { Data } from "../../types/formDataTypes.js";
 
-type Props = {
-  form: {},
-  isShown: boolean,
-  startTimer: () => void,
-  requestStatus: string,
-  err?: string,
-};
+// type Props = {
+//   form: {},
+//   isShown: boolean,
+//   startTimer: () => void,
+//   requestStatus: string,
+// };
 
-type State = {};
+// type State = {};
 
 const FormResult = form => {
   const { cardNum, cardType, firstName, lastName, isValid } = form.form.data;

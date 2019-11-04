@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export const useUsersList = () => {
-  const [data, setData] = useState([]);
+  const [users, setUsers] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [isSomethingSelected, setIsSomethingSelected] = useState(false);
 
@@ -17,7 +17,7 @@ export const useUsersList = () => {
             isChecked: false,
           });
         });
-        setData(currentData.slice());
+        setUsers(currentData.slice());
       })
       .catch(err => console.log(err));
   };
@@ -31,11 +31,11 @@ export const useUsersList = () => {
   };
 
   const onAdd = () => {
-    let currentData = [...data];
+    let currentData = [...users];
     let text = userInput;
     let key =
       currentData.length > 0 ? currentData[currentData.length - 1].key + 1 : 0;
-    setData(prevState => [
+    setUsers(prevState => [
       ...prevState,
       { first: text, key: key, isChecked: false },
     ]);
@@ -43,24 +43,24 @@ export const useUsersList = () => {
   };
 
   const onDelete = () => {
-    let currentData = [...data];
+    let currentData = [...users];
     let selectedItems = currentData.filter(el => el.isChecked !== true);
 
-    setData(selectedItems);
+    setUsers(selectedItems);
     setIsSomethingSelected(false);
   };
 
   const handleCheckbox = (val, key) => {
-    let currentData = [...data];
+    let currentData = [...users];
     let selectedItemIndex = currentData.findIndex(el => el.key === key);
     currentData[selectedItemIndex].isChecked = val;
 
-    setData(currentData);
+    setUsers(currentData);
     setIsSomethingSelected(true);
   };
 
   return {
-    data,
+    users,
     userInput,
     isSomethingSelected,
     fetchData,
