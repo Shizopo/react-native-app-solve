@@ -1,3 +1,3 @@
 // @flow
 
-export { default } from "./FormResultContainer";
+export { default } from "./FormResult";
