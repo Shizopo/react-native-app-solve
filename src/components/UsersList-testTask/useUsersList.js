@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import UsersList from "./UsersList";
+import { useState, useEffect } from "react";
 
-const UsersListHooks = () => {
+export const useUsersList = () => {
   const [data, setData] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [isSomethingSelected, setIsSomethingSelected] = useState(false);
@@ -60,17 +59,14 @@ const UsersListHooks = () => {
     setIsSomethingSelected(true);
   };
 
-  return (
-    <UsersList
-      data={data}
-      userInput={userInput}
-      isSomethingSelected={isSomethingSelected}
-      handleInput={handleInput}
-      handleCheckbox={handleCheckbox}
-      onAdd={onAdd}
-      onDelete={onDelete}
-    />
-  );
+  return {
+    data,
+    userInput,
+    isSomethingSelected,
+    fetchData,
+    handleInput,
+    handleCheckbox,
+    onAdd,
+    onDelete,
+  };
 };
-
-export default UsersListHooks;

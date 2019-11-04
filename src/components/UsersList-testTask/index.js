@@ -1,1 +1,1 @@
-export { default } from "./UsersListHooks";
+export { default } from "./UsersList";
