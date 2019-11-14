@@ -21,6 +21,8 @@ import FormResult from "../FormResult";
 import EndlessList from "../EndlessList";
 import ProductForm from "../ProductForm";
 import UsersList from "../UsersList-testTask";
+import PatientCare from "../PatientCare";
+
 import { Provider } from "react-redux";
 import { store } from "../../configs/createStore";
 import "../../services/CreditCardService";
@@ -34,21 +36,21 @@ console.disableYellowBox = true;
 class App extends React.Component<Props, State> {
   render() {
     return (
-      // <EndlessList />
-      // <ProductForm />
+      <Provider store={store}>
+        {/* <EndlessList /> */}
+        {/* <ProductForm /> */}
+        <PatientCare />
+        {/* <UsersList /> */}
 
-      <UsersList />
+        {/* <ScrollView>
+          <View style={styles.container}>
+            <FormBody />
+            <FormResult />
+          </View>
 
-      // <Provider store={store}>
-      //   <ScrollView>
-      //     <View style={styles.container}>
-      //       <FormBody />
-      //       <FormResult />
-      //     </View>
-
-      //     {/* <View style={styles.container}></View> */}
-      //   </ScrollView>
-      // </Provider>
+          <View style={styles.container}></View>
+        </ScrollView> */}
+      </Provider>
     );
   }
 }
